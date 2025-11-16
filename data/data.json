@@ -2,7 +2,7 @@
   "nodes": [
     {
       "id": "SPORT",
-      "label": "СПРТ",
+      "label": "СПОРТ",
       "type": "sport",
       "floor": 1,
       "wing": "left",

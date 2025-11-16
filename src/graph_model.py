@@ -1,13 +1,8 @@
-# src/graph_model.py
 import json
 import networkx as nx
 
 def build_graph(data: dict) -> nx.Graph:
-    """
-    Побудувати граф NetworkX із JSON-даних.
-    Підтримує атрибути вузлів: pos=(x,y), type, floor, wing.
-    Кожне ребро: u, v, weight.
-    """
+    
     G = nx.Graph()
     # додавання вузлів
     for n in data["nodes"]:

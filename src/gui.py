@@ -1,4 +1,3 @@
-# src/gui.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 from pathlib import Path
@@ -55,44 +54,39 @@ class FloorPlot(ttk.Frame):
         if path:
             p = [n for n in path if n in subG.nodes]
             if len(p) > 1:
-                # 🔴 1) Маршрут — червоний
+                # маршрут позначається червоним кольором
                 nx.draw_networkx_edges(
                     subG, pos,
                     edgelist=list(zip(p, p[1:])),
                     width=3.5,
-                    edge_color="#e53935",  # насичений червоний
+                    edge_color="#e53935",  
                     ax=self.ax
                 )
 
-                # 🔵 2) Стартова точка — блакитна
+                # початок маршруту позначений синім кольором
                 start_node = p[0]
                 nx.draw_networkx_nodes(
                     subG, pos,
                     nodelist=[start_node],
-                    node_color="#29b6f6",  # блакитний
+                    node_color="#29b6f6",  
                     node_size=700,
                     edgecolors="black",
                     linewidths=1.5,
                     ax=self.ax
                 )
 
-                # 🟢 3) Кінцева точка — зелена
+                # кінць маршруту позначений зеленим кольором
                 end_node = p[-1]
                 nx.draw_networkx_nodes(
                     subG, pos,
                     nodelist=[end_node],
-                    node_color="#43a047",  # зелений
+                    node_color="#43a047",  
                     node_size=700,
                     edgecolors="black",
                     linewidths=1.5,
                     ax=self.ax
                 )    
 
-
-        #if path:
-           # p = [n for n in path if n in subG.nodes]
-            #if len(p) > 1:
-                #nx.draw_networkx_edges(subG, pos, edgelist=list(zip(p, p[1:])), width=3, edge_color="#e53935", ax=self.ax)
 
         t = "Усі поверхи" if floor == "all" else f"Поверх {floor}"
         self.ax.set_title(t)
@@ -102,7 +96,7 @@ class FloorPlot(ttk.Frame):
 class PathfinderGUI(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Навігація корпусом — сітка + вкладки поверхів")
+        self.title("Навігація корпусом - сітка + вкладки поверхів")
         self.geometry("1200x750")
         self.minsize(1000, 650)
 
@@ -122,9 +116,9 @@ class PathfinderGUI(tk.Tk):
     def _sorted_nodes(self):
         def keyf(n):
             d = self.G.nodes[n]
-            floor = d.get("floor", 0) or 0               # None -> 0
-            wing  = d.get("wing") or ""                  # None -> ""
-            typ   = d.get("type") or "room"              # None -> "room"
+            floor = d.get("floor", 0) or 0               
+            wing  = d.get("wing") or ""                  
+            typ   = d.get("type") or "room"              
             label = str(d.get("label", n))
             return (int(floor), wing, typ, label)
 
@@ -135,16 +129,6 @@ class PathfinderGUI(tk.Tk):
             result.append((display, n))
         return result    
 
-   # def _sorted_nodes(self):
-   #     def keyf(n):
-    #        d = self.G.nodes[n]
-     #       return (d.get("floor", 0) or 0, d.get("wing",""), d.get("type","room"), str(d.get("label", n)))
-      #  res = []
-       # for n in sorted(self.G.nodes, key=keyf):
-        #    lab = str(self.G.nodes[n].get("label", n))
-         #   display = f"{n} — {lab}" if lab != n else n
-          #  res.append((display, n))
-        #return res
 
     def _build_controls(self):
         top = ttk.Frame(self, padding=8)
@@ -194,7 +178,7 @@ class PathfinderGUI(tk.Tk):
             self.nb.add(frame, text=title)
             self.plots[f] = frame
 
-    # utils
+    # утиліти
     def _to_id(self, display):
         return display.split("—",1)[0].strip() if "—" in display else display
 
@@ -208,7 +192,7 @@ class PathfinderGUI(tk.Tk):
         for f, plot in self.plots.items():
             plot.draw_subgraph(self.G, f, path=path, draw_weights=True)
 
-    # actions
+    # дії
     def _on_build(self):
         s = self._to_id(self.start_var.get().strip())
         e = self._to_id(self.end_var.get().strip())

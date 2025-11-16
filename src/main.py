@@ -1,4 +1,3 @@
-# src/main.py
 import sys
 from pathlib import Path
 import networkx as nx
@@ -20,7 +19,7 @@ def choose_algo(name: str) -> str:
 
 
 def main() -> None:
-    print(" Система пошуку найкоротшого маршруту по корпусу коледжу (Python) ")
+    print(" Система пошуку найкоротшого маршруту по корпусу коледжу ")
 
     if not Path(DATA_PATH).exists():
         print(f" Дані не знайдено: {DATA_PATH}")
@@ -28,9 +27,9 @@ def main() -> None:
               "   python -m src.generate_data")
         sys.exit(1)
 
-    # 1) читаємо JSON
+    # читає дані з JSON
     data = load_graph_from_json(DATA_PATH)
-    # 2) будуємо граф (функція з твого graph_model.py)
+    # будує граф (функція з graph_model.py)
     G: nx.Graph = build_graph(data)
 
     while True:
@@ -38,7 +37,7 @@ def main() -> None:
         end   = input("Введіть кінцеву точку (наприклад, LIB): ").strip()
 
         if not node_exists(G, start) or not node_exists(G, end):
-            print(" Вузол(и) не знайдено в графі. Перевірте назви і спробуйте знову.")
+            print(" Вузлів не знайдено в графі. Перевірте назви і спробуйте знову.")
             again = input("Спробувати ще? (yes/no): ").strip().lower()
             if again != "yes":
                 break
@@ -59,17 +58,16 @@ def main() -> None:
             continue
 
         print("\n Найкоротший маршрут:", " далі ".join(path))
-        print(f"   Загальна довжина: {dist:.2f} (умовн. од.)\n")
+        print(f"   Загальна довжина: {dist:g} метрів.\n")
 
         vis = input("Показати візуалізацію? (yes/no): ").strip().lower()
         if vis == "yes":
             pos_json = load_positions(DATA_PATH)   # ключі — str(node_id)
-            # беремо тільки наявні у JSON
+            # бере тільки наявні у JSON
             pos = {n: pos_json[str(n)] for n in G.nodes if str(n) in pos_json}
 
             draw_graph(
                 G,
-                #pos=pos,
                 path=path,
                 draw_weights=DRAW_WEIGHTS,
                 title=f"Маршрут {start} → {end} ({algo})",

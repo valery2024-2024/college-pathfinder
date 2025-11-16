@@ -1,4 +1,3 @@
-# src/data_loader.py
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -6,7 +5,6 @@ from typing import Dict, Tuple
 
 
 def load_graph_from_json(path: str | Path) -> dict:
-    """Завантажити JSON з даними вузлів/ребер корпусу (без побудови графа)."""
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Файл не знайдено: {p}")
@@ -15,7 +13,6 @@ def load_graph_from_json(path: str | Path) -> dict:
 
 
 def load_positions(json_path: str | Path) -> Dict[str, Tuple[float, float]]:
-    """Повертає pos = {node_id: (x, y)} з того ж data.json для візуалізації."""
     json_path = Path(json_path)
     with json_path.open("r", encoding="utf-8") as f:
         data = json.load(f)

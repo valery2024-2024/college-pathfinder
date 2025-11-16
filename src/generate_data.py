@@ -1,4 +1,3 @@
-# src/generate_data.py
 import json
 from pathlib import Path
 
@@ -7,7 +6,7 @@ DX, DY = 2, 2
 
 # Короткі мітки
 LBL = {
-    "SPORT": "СПРТ",
+    "SPORT": "СПОРТ",
     "HALL":  "АКТ",
     "LOBBY": "ХОЛ",
     "LIB":   "БІБЛ",
@@ -27,7 +26,7 @@ def add_edge(edges, u, v, w=2):
     edges.append({"u": u, "v": v, "weight": float(w)})
 
 def corridor(nodes, edges, ids, x0, y0, floor, horizontal=True, wing=None):
-    """Створює ланцюжок аудиторій по сітці."""
+    # створює ланцюжок аудиторій по сітці.
     prev = None
     for i, rid in enumerate(ids):
         x = x0 + (i * DX if horizontal else 0)
@@ -40,46 +39,46 @@ def corridor(nodes, edges, ids, x0, y0, floor, horizontal=True, wing=None):
 def build_data():
     nodes, edges = [], []
 
-    # ---------------------------
-    # 1 ПОВЕРХ (y ~ 10)
-    # ---------------------------
+
+    # 1 поверх (y ~ 10)
+    
     f1y = 10
-    # Ліве крило: СПРТ (x=-8), АКТ (x=-6)
+    # ліве крило: СПОРТ (x=-8), АКТ (x=-6)
     add_node(nodes, "SPORT", -8, f1y, 1, "sport", LBL["SPORT"], wing="left")
     add_node(nodes, "HALL",  -6, f1y, 1, "hall",  LBL["HALL"],  wing="left")
     add_edge(edges, "SPORT", "HALL", 2)
 
-    # Центральний ХОЛ (x=-2)
+    # центральний ХОЛ (x=-2)
     add_node(nodes, "LOBBY", -2, f1y, 1, "lobby", LBL["LOBBY"])
 
-    # Сходи ліві/праві
+    # сходи ліві/праві
     add_node(nodes, "STAIR_L_F1", -4, f1y, 1, "stair", "SL1", wing="left")
     add_node(nodes, "STAIR_R_F1",  6, f1y, 1, "stair", "SR1", wing="right")
 
-    # Коридор аудиторій праворуч (1..13) від x=0 до x=24
+    # коридор аудиторій праворуч (1..13) від x=0 до x=24
     corridor(nodes, edges, list(range(1, 14)), x0=0, y0=f1y, floor=1, horizontal=True, wing="right")
 
-    # Зв’язки по 1-му
+    # зв’язки по 1-му поверсі
     add_edge(edges, "HALL", "LOBBY", 2)
-    add_edge(edges, "LOBBY", "1", 2)         # ХОЛ до початку коридору
-    add_edge(edges, "1", "STAIR_R_F1", 4)    # праві сходи ближче до 6-ї
+    add_edge(edges, "LOBBY", "1", 2)         
+    add_edge(edges, "1", "STAIR_R_F1", 4)    
     add_edge(edges, "6", "STAIR_R_F1", 3)
     add_edge(edges, "LOBBY", "STAIR_L_F1", 2)
 
-    # ---------------------------
+
     # 2 ПОВЕРХ (y ~ 20)
-    # ---------------------------
+
     f2y = 20
-    # Ліві сходи/праві сходи
+    # ліві сходи/праві сходи
     add_node(nodes, "STAIR_L_F2", -4, f2y, 2, "stair", "SL2", wing="left")
     add_node(nodes, "STAIR_R_F2",  6, f2y, 2, "stair", "SR2", wing="right")
 
-    # Ліве крило: аудиторії 14..18 уздовж лівої частини (горизонт зліва направо до ХОЛ-2)
+    # ліве крило: аудиторії 14..18 уздовж лівої частини (горизонт зліва направо до ХОЛ-2)
     corridor(nodes, edges, [14, 15, 16, 17, 18], x0=-8, y0=f2y, floor=2, horizontal=True, wing="left")
 
-    # БІБЛ поруч з 18-ю (ближче до центру)
+    # БІБЛІОТЕКА поруч з 16-ю аудиторією
     add_node(nodes, "LIB", -2, f2y, 2, "lib", LBL["LIB"], wing="left")
-    add_edge(edges, "18", "LIB", 3)
+    add_edge(edges, "16", "LIB", 3)
     add_edge(edges, "LIB", "STAIR_L_F2", 2)
 
     # Правий коридор 19..25
@@ -89,9 +88,9 @@ def build_data():
     # Перемичка центр (між лівою та правою частиною)
     add_edge(edges, "LIB", "19", 6)
 
-    # ---------------------------
+
     # 3 ПОВЕРХ (y ~ 30)
-    # ---------------------------
+    
     f3y = 30
     # Сходи
     add_node(nodes, "STAIR_L_F3", -4, f3y, 3, "stair", "SL3", wing="left")
@@ -104,9 +103,9 @@ def build_data():
     add_edge(edges, "26", "STAIR_L_F3", 2)
     add_edge(edges, "33", "STAIR_R_F3", 3)
 
-    # ---------------------------
+
     # Вертикальні зв’язки сходів між поверхами
-    # ---------------------------
+    
     add_edge(edges, "STAIR_L_F1", "STAIR_L_F2", 4)
     add_edge(edges, "STAIR_L_F2", "STAIR_L_F3", 4)
     add_edge(edges, "STAIR_R_F1", "STAIR_R_F2", 4)
