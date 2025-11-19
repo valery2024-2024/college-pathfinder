@@ -19,7 +19,7 @@ def choose_algo(name: str) -> str:
 
 
 def main() -> None:
-    print(" Система пошуку найкоротшого маршруту по корпусу коледжу ")
+    print("Система пошуку найкоротшого маршруту по корпусу коледжу ")
 
     if not Path(DATA_PATH).exists():
         print(f" Дані не знайдено: {DATA_PATH}")
@@ -37,7 +37,7 @@ def main() -> None:
         end   = input("Введіть кінцеву точку (наприклад, LIB): ").strip()
 
         if not node_exists(G, start) or not node_exists(G, end):
-            print(" Вузлів не знайдено в графі. Перевірте назви і спробуйте знову.")
+            print("Вузлів не знайдено в графі. Перевірте назви і спробуйте знову.")
             again = input("Спробувати ще? (yes/no): ").strip().lower()
             if again != "yes":
                 break
@@ -57,8 +57,8 @@ def main() -> None:
                 break
             continue
 
-        print("\n Найкоротший маршрут:", " далі ".join(path))
-        print(f"   Загальна довжина: {dist:g} метрів.\n")
+        print("\nНайкоротший маршрут:", " далі ".join(path))
+        print(f"Загальна довжина: {dist:g} метрів.\n")
 
         vis = input("Показати візуалізацію? (yes/no): ").strip().lower()
         if vis == "yes":
