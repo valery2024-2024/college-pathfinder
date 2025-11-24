@@ -12,7 +12,7 @@ def _draw_node_labels(ax, pos, labels, dy=0.06, fs=9):
             fontsize=fs, fontweight="bold", ha="center", va="center",
             bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.75),
             zorder=6, clip_on=False,
-            path_effects=[withStroke(linewidth=1.5, foreground="white")]  # тонкий білий обвід
+            path_effects=[withStroke(linewidth=1.5, foreground="white")]  
         )
 
 def _get_pos(G, pos=None):
@@ -75,7 +75,7 @@ def draw_graph(
     draw_weights=False,
     title=None,
     highlight_end=True,
-):
+    ):
     # візуалізація графа корпусу.
     pos = _get_pos(G, pos)
 

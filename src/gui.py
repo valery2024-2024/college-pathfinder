@@ -217,7 +217,7 @@ class PathfinderGUI(tk.Tk):
             return
 
         labels = {n: self.G.nodes[n].get("label", n) for n in path}
-        chain = " → ".join(labels[n] for n in path)
+        chain = " далі ".join(labels[n] for n in path)
         self._set_result(f"Найкоротший маршрут: {chain}\nДовжина: {dist:.2f}\nАлгоритм: {name}")
         self._redraw_all(path)
 

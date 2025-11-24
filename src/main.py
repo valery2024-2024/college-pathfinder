@@ -22,9 +22,9 @@ def main() -> None:
     print("Система пошуку найкоротшого маршруту по корпусу коледжу ")
 
     if not Path(DATA_PATH).exists():
-        print(f" Дані не знайдено: {DATA_PATH}")
-        print("   Спочатку згенеруйте файл даних командою:\n"
-              "   python -m src.generate_data")
+        print(f"Дані не знайдено: {DATA_PATH}")
+        print("Спочатку згенеруйте файл даних командою:\n"
+              "python -m src.generate_data")
         sys.exit(1)
 
     # читає дані з JSON
@@ -51,7 +51,7 @@ def main() -> None:
             else:
                 path, dist = dijkstra_path(G, start, end)
         except Exception as ex:
-            print(f" Помилка пошуку: {ex}")
+            print(f"Помилка пошуку: {ex}")
             again = input("Спробувати ще? (yes/no): ").strip().lower()
             if again != "yes":
                 break
@@ -70,14 +70,14 @@ def main() -> None:
                 G,
                 path=path,
                 draw_weights=DRAW_WEIGHTS,
-                title=f"Маршрут {start} → {end} ({algo})",
+                title=f"Маршрут {start} - {end} ({algo})",
             )   
 
             print(f"[diag] pos: {len(pos)} із {G.number_of_nodes()} вузлів мають координати")     
 
         again = input("Виконати новий пошук? (yes/no): ").strip().lower()
         if again != "yes":
-            print(" Програму завершено.")
+            print("Програму завершено.")
             break
 
 
